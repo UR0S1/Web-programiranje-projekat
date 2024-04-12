@@ -1,0 +1,42 @@
+body {
+    font-family: 'Golos Text', sans-serif;
+    background-color: #f9f9f9;
+}
+.wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+}
+input[type="date"],
+input[type="text"],
+textarea {
+    width: 570px;
+    max-width: 570px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-secondary {
+    background-color: #6c757d;
+}
+.invalid-feedback {
+    color: #dc3545;
+}

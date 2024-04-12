@@ -1,0 +1,15 @@
+CREATE TABLE uplate (
+    id INT NOT NULL AUTO_INCREMENT,
+    datum DATE,
+    svrha VARCHAR(255),
+    iznos DECIMAL(10,2),
+    PRIMARY KEY (id)
+);
+
+
+INSERT INTO uplate (datum, svrha, iznos) VALUES 
+    ('2024-04-12', 'Clanarina', 150.00),
+    ('2024-04-10', 'Donacija', 50.75),
+    ('2024-04-11', 'Registracija automobila', 75.50);
+
+

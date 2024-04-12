@@ -1,34 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Svi Podaci</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>Podaci o uplatama</title>
+	<meta name="author" content="Урош Тодоровић, uros.todorovic@valjevskagimnazija.edu.rs">
+	<meta name="description" content="Vežbe iz predmeta Veb programiranje, razvijanje veb aplikacije">
+	<meta name="keywords" content="html, css, php, primer">
+	<link rel="stylesheet" href="stil.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis/com/css2?family=Golos+Text&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Svi Podaci</h1>
-        <?php
-        require_once 'konfiguracija.php';
-
-        $sql = "SELECT id, ime, prezime, broj_racuna, valuta, iznos FROM moja_tabela";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo "<table class='table table-striped'><thead><tr><th>ID</th><th>Ime</th><th>Prezime</th><th>Broj Računa</th><th>Valuta</th><th>Iznos</th></tr></thead><tbody>";
-            while ($row = mysqli_fetch_array($result)) {
-                echo "<tr><td>" . $row["id"] . "</td><td>" . $row["ime"] . "</td><td>" . $row["prezime"] . "</td><td>" . $row["broj_racuna"] . "</td><td>" . $row["valuta"] . "</td><td>" . $row["iznos"] . "</td>";
-                echo "<td><a href='pregled.php?id=" . $row["id"] . "' class='btn btn-info btn-sm'>Pregled</a> <a href='azuriranje.php?id=" . $row["id"] . "' class='btn btn-warning btn-sm'>Ažuriranje</a> <a href='brisanje.php?id=" . $row["id"] . "' class='btn btn-danger btn-sm'>Brisanje</a></td></tr>";
-            }
-            echo "</tbody></table>";
-        } else {
-            echo "Nema rezultata.";
-        }
-
-        $conn->close();
-        ?>
-    </div>
+	<main class="wrapper mt-5 mb-3 clearfix">
+		<h2 class="pull-left">Podaci o zaposlenima</h2>
+		<a href="dodavanje.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Dodavanje nove uplate</a>
+		<?php
+			require_once "konfiguracija.php";
+			$sql = "SELECT * FROM uplate";
+			
+			if($result = mysqli_query($link, $sql)){
+				if(mysqli_num_rows($result) > 0){
+					echo '<table class="table table-bordered table-striped">';
+						echo "<thead>";
+							echo "<tr>";
+								echo "<th>ID</th>";
+								echo "<th>Datum</th>";
+								echo "<th>Svrha</th>";
+								echo "<th>Iznos</th>";
+							echo "</tr>";
+						echo "</thead>";
+						echo "<tbody>\r\n";
+							while($row = mysqli_fetch_array($result)){
+								echo "<tr>";
+									echo "<td>" . $row['id'] . "</td>";
+									echo "<td>" . $row['datum'] . "</td>";
+									echo "<td>" . $row['svrha'] . "</td>";
+									echo "<td>" . $row['iznos'] . "</td>";
+									echo "<td>\r\n";
+										echo '<a href="citanje.php?id='. $row['id'] .'" class="mr-3" title="Pregled podataka" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
+										echo '<a href="azuriranje.php?id='. $row['id'] .'" class="mr-3" title="Ažuriranje zapisa" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
+										echo '<a href="brisanje.php?id='. $row['id'] .'" class="mr-3" title="Brisanje zapisa" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+									echo "</td>";
+								echo "</tr>\r\n";
+							}
+						echo "</tbody>";
+					echo "</table>\r\n";
+					mysqli_free_result($result);
+				}
+				else{
+					echo '<div class="alert alert-danger"><em>Nije pronađen nijedan zapis.</em></div>';
+				}
+			}
+			else{
+					echo "Upss! Nešto je bilo pogrešno. Pokušajte ponovo kasnije.";
+				}
+				
+			mysqli_close($link);
+		?>
+	</main>
 </body>
 </html>
